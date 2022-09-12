@@ -15,6 +15,17 @@ app.get('/', (req, res) => {
 app.get('/blog/:slug', (req, res) => {
     DatabaseResource.retrieve("Posts", { Slug: req.params.slug, Status: "Done" }, true).then(results => {
         if (!Array.isArray(results)) {
+            // @ts-ignore
+            let content: string[] | string = results.resourceData.Content.split(' ');
+            for (const chars of content) {
+                if (chars.includes("**")) {
+                    // @ts-ignore
+                    results.resourceData.Content = results.resourceData.Content.replace('**', '<b>');
+                    // @ts-ignore
+                    results.resourceData.Content = results.resourceData.Content.replace('**', '</b>');
+                }
+            }
+
             res.render("post", results.resourceData);
         }
     })
@@ -26,7 +37,8 @@ app.get('/blog', (req, res) => {
         if (Array.isArray(results)) {
             results = results.filter(r => {
                 return r.resourceData.Status === "Done";
-            })
+            });
+            results = results.reverse()
         }
         res.render('posts', { posts: results });
     })

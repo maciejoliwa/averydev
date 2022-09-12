@@ -8,7 +8,7 @@ html(lang="en")
         link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
         link(href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap", rel="stylesheet")
         script(src="https://cdn.tailwindcss.com")
-        title Document
+        title= `AveryDev - ${Title}`
     body(style="background-color: #19052e; font-family: 'Montserrat', sans-serif;")
         nav(class="bg-violet-700 py-4 box-shadow justify-between flex items-center px-2 sm:px-4 md:px-[250px] xl:px-[500px]")
             a(href="/")
@@ -23,4 +23,4 @@ html(lang="en")
             header
                 h2(class="text-3xl font-bold")= Title
                 p(class="mt-2")= Date
-            p(class="mt-4", style="white-space: pre-wrap")= Content
+            p(class="mt-4", style="white-space: pre-wrap")!= Content
