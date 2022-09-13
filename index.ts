@@ -12,6 +12,10 @@ app.get('/', (req, res) => {
     res.render('index', {});
 });
 
+app.get('/contact', (req, res) => {
+    res.render('contact', {});
+})
+
 app.get('/blog/:slug', (req, res) => {
     DatabaseResource.retrieve("Posts", { Slug: req.params.slug, Status: "Done" }, true).then(results => {
         if (!Array.isArray(results)) {

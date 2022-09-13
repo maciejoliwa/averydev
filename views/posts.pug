@@ -5,7 +5,7 @@ html(lang="en")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         script(src="https://cdn.tailwindcss.com")
-        title Document
+        title AveryDev - Blog
     body(style="background-color: #0E0B16; font-family: 'Montserrat', sans-serif;")
         nav(style="background-color: #4717f6", class="py-4 box-shadow justify-between flex items-center px-2 sm:px-4 md:px-[250px] xl:px-[500px]")
             a(href="/")
@@ -14,11 +14,11 @@ html(lang="en")
                 li(class="inline mr-4 hover:text-gray-300")
                     a(href='/blog', class) Blog
                 li(class="inline hover:text-gray-300")
-                    a(href='/about', class) Contact
+                    a(href='/contact', class) Contact
 
         section(class="hero py-16 px-2 sm:px-4 md:px-[250px] xl:px-[500px]")
             h2(class="text-white text-3xl") Posts
             ul(class="mt-2")
                 each post in posts
-                    li(class="underline text-white mt-2")
+                    li(class="underline text-pink-500 hover:text-pink-300 cursor-pointer mt-2")
                         a(href=`/blog/${post.data.Slug}`)= `${post.data.Title} - ${post.data.Date}`
