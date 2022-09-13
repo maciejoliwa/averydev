@@ -31,6 +31,8 @@ app.get('/blog/:slug', (req, res) => {
             }
 
             res.render("post", results.resourceData);
+        } else {
+            res.send("No article found")
         }
     })
     .catch(err => console.log(err))
