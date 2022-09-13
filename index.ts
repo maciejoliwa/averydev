@@ -33,7 +33,8 @@ app.get('/blog/:slug', (req, res) => {
             res.render("post", results.resourceData);
         }
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err))
+    .then(_ => res.send("No article found"));
 });
 
 app.get('/blog', (req, res) => {
