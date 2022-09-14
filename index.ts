@@ -1,6 +1,9 @@
 import Express from 'express';
 import path from 'path';
 import { DatabaseResource, DatabaseResourceData } from './db';
+import MarkdownIT from 'markdown-it';
+
+const md = new MarkdownIT("commonmark", { html: true, breaks: true, typographer: true });
 
 const app = Express();
 const port = process.env.PORT || 8080;
@@ -20,23 +23,22 @@ app.get('/blog/:slug', (req, res) => {
     DatabaseResource.retrieve("Posts", { Slug: req.params.slug, Status: "Done" }, true).then(results => {
         if (!Array.isArray(results)) {
             // @ts-ignore
-            let content: string[] | string = results.resourceData.Content.split(' ');
-            for (const chars of content) {
-                if (chars.includes("**")) {
-                    // @ts-ignore
-                    results.resourceData.Content = results.resourceData.Content.replace('**', '<b>');
-                    // @ts-ignore
-                    results.resourceData.Content = results.resourceData.Content.replace('**', '</b>');
-                }
+            if (typeof results.resourceData.Content === "string") {
+                results.resourceData.Content = md.render(results.resourceData.Content);
+                // @ts-ignore
+                results.resourceData.Content.replace("</p>", "</p><br><br>");
             }
-
+                       
             res.render("post", results.resourceData);
-        } else {
-            res.send("No article found")
+            return;
         }
+
     })
     .catch(err => console.log(err))
-    .then(_ => res.send("No article found"));
+    .catch(_ => {
+        res.send("No article found")
+        return;
+    });
 });
 
 app.get('/blog', (req, res) => {
