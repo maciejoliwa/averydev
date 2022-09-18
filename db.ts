@@ -24,8 +24,14 @@ class DatabaseResource {
         this.data = data; 
     }
 
-    public upload() {
-
+    public static upload(table: string, obj: DatabaseResourceData) {
+        base(table).create([
+            { 
+                fields: { ...obj, Date: new Date().toDateString() }
+            }
+        ], (err, _) => {
+            if (err) console.log(err);
+        })
     }
 
     public static createAirtableFormulaFromObject(obj: DatabaseResourceData): string {

@@ -9,9 +9,9 @@ html(lang="en")
         link(href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap", rel="stylesheet")
         script(src="https://cdn.tailwindcss.com")
         link(rel="stylesheet", href="/css/post.css")
-        title= `AveryDev - ${Title}`
+        title= `AveryDev - ${post.Title}`
     body(style="background-color: #0E0B16; font-family: 'Montserrat', sans-serif;")
-        nav(style="background-color: #4717f6", class="py-4 box-shadow justify-between flex items-center px-2 sm:px-4 md:px-[250px] xl:px-[500px]")
+        nav(style="background: linear-gradient(to right, #2a509c 30%, #db2777);", class="py-4 box-shadow justify-between flex items-center px-2 sm:px-4 md:px-[250px] xl:px-[500px]")
             a(href="/")
                 h2(class="text-white font-bold text-4xl") AveryDev
             ul(class="text-white underline")
@@ -22,6 +22,28 @@ html(lang="en")
 
         section(class="hero py-8 text-gray-200 px-2 sm:px-4 md:px-[250px] xl:px-[500px]")
             header
-                h2(class="font-extrabold inline-block text-4xl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-600")= Title
-                p(class="mt-2 text-gray-500 italic")= Date
-            p(class="mt-4", id="content")!= Content
+                h2(class="font-extrabold inline-block text-4xl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-600")= post.Title
+                p(class="mt-2 text-gray-500 italic")= post.Date
+            p(class="mt-4", id="content")!= post.Content
+
+            section()
+                hr
+                form(action="/add-comment", method="post", class="mt-4")
+                    div()
+                        label(for="username", class="letter-spacing-4 text-xl") USERNAME
+                        input(type="text", required, class="block bg-gray-800 py-4 border-b-2 border-gray-300 px-6 mt-1", name="username")  
+                    div(class="mt-4")
+                        label(for="comment", class="letter-spacing-4 text-xl") COMMENT
+                        textarea(name="comment", required, cols="30", rows="10", class="block w-full resize-none border-b-2 border-gray-300 bg-gray-800 py-4 px-6 mt-1") 
+                    div(class="mt-4")
+                        input(type="submit", value="ADD COMMENT", class="block w-full resize-none cursor-pointer bg-blue-500 hover:bg-blue-400 py-4 px-6 mt-1")
+
+            section(class="mt-6")
+                each comment in comments
+                    div(class="mt-4 border-2 p-2 border-gray-700")
+                        p(class="inline-block font-bold text-xl pb-0 mb-0")= comment.data.Username
+                        span(class="inline-block text-gray-500 italic text-sm")= comment.data.Date
+                        div()
+                            p= comment.data.Comment
+        
+        script(src="/js/comment.js") 
